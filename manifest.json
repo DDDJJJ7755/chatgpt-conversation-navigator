@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "ChatGPT 工作流导航 V2.5.3",
+  "version": "2.5.3",
+  "description": "调整工作台布局：快捷提示词移动到对话节点上方，避免被长节点列表挤压。",
+  "permissions": [
+    "storage",
+    "unlimitedStorage"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*"
+      ],
+      "js": [
+        "page_bridge.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuw1trzJ4zRer5Ns+XG6EZEup9NNg2UySeR7cUmPB7vEpQ3OEN8Ashydx8K8/L+uVTMW/8sZ+L1T5xhDkWuJqeU/wvmiDElbykRUbpwemSKaZCI6cOfrswJ9uB65xRtPl9uWGocPr+p2SGlWAVp/mL3iT3Bl4jUeGZ07eyH545d+8WiX5hzGhutNabsPEFvrkn7ahqD4nk7G+WoZK3Px/2OV4YX4yLjIWDTeZGIi61BwU0lkDcNiSs1CG63S98USH3vJ/qoT+/obKxfguRFLSZsJ/3NkTLwrVUYaxhU3ESDgyaeu4PAThAEQkZhCDPMU2cS/OeYCOahGzCCmIVIyOEQIDAQAB"
+}

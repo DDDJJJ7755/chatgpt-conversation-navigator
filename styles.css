@@ -1,0 +1,1507 @@
+#cwv21-root, #cwv21-root * { box-sizing:border-box; }
+
+#cwv21-root {
+  --bg:rgba(25,25,27,.96);
+  --panel:rgba(35,35,38,.98);
+  --line:rgba(255,255,255,.10);
+  --soft:rgba(255,255,255,.055);
+  --soft2:rgba(255,255,255,.085);
+  --text:rgba(255,255,255,.95);
+  --muted:rgba(255,255,255,.54);
+  --dim:rgba(255,255,255,.30);
+  --accent:#10a37f;
+  --accentSoft:rgba(16,163,127,.18);
+  --shadow:0 22px 70px rgba(0,0,0,.34);
+  position:fixed;
+  top:50%;
+  right:8px;
+  z-index:2147483000;
+  transform:translateY(-50%);
+  font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  color:var(--text);
+  pointer-events:none;
+}
+
+/* ===== V1.1.1 风格：右侧全消息刻度导航 ===== */
+#cwv21-root .cwv21-nav-rail {
+  position:relative;
+  width:34px;
+  height:min(70vh,690px);
+  border:1px solid var(--line);
+  border-radius:17px;
+  background:linear-gradient(180deg,rgba(31,31,34,.96),rgba(19,19,21,.97));
+  box-shadow:0 12px 36px rgba(0,0,0,.26);
+  backdrop-filter:blur(18px);
+  pointer-events:auto;
+  transition:width .18s ease,border-color .18s ease;
+}
+
+#cwv21-root .cwv21-nav-rail:hover {
+  border-color:rgba(16,163,127,.35);
+}
+
+#cwv21-root .cwv21-rail-head {
+  position:absolute;
+  left:0; right:0; top:7px;
+  height:30px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  z-index:3;
+}
+
+#cwv21-root .cwv21-top-btn,
+#cwv21-root .cwv21-workbench-btn {
+  border:0;
+  color:rgba(255,255,255,.72);
+  background:transparent;
+  cursor:pointer;
+  font-weight:700;
+}
+
+#cwv21-root .cwv21-top-btn {
+  width:25px;height:20px;
+  border-radius:8px;
+  font-size:14px;
+}
+
+#cwv21-root .cwv21-top-btn:hover,
+#cwv21-root .cwv21-workbench-btn:hover {
+  color:white;
+  background:rgba(255,255,255,.08);
+}
+
+#cwv21-root .cwv21-rail-count {
+  font-size:8px;
+  color:var(--muted);
+  line-height:10px;
+}
+
+#cwv21-root .cwv21-ticks {
+  position:absolute;
+  top:48px;
+  bottom:49px;
+  left:5px;
+  right:5px;
+}
+
+#cwv21-root .cwv21-tick {
+  position:absolute;
+  right:0;
+  width:23px;
+  height:9px;
+  transform:translateY(-50%);
+  border:0;
+  padding:0;
+  background:transparent;
+  cursor:pointer;
+}
+
+#cwv21-root .cwv21-tick span {
+  display:block;
+  margin-left:auto;
+  width:11px;
+  height:3px;
+  border-radius:999px;
+  background:rgba(255,255,255,.30);
+  transition:.14s ease;
+}
+
+#cwv21-root .cwv21-tick:hover span {
+  width:23px;
+  height:4px;
+  background:rgba(255,255,255,.92);
+}
+
+#cwv21-root .cwv21-tick.is-key span {
+  width:15px;
+  background:rgba(16,163,127,.82);
+}
+
+#cwv21-root .cwv21-tick.is-key:hover span {
+  width:23px;
+  background:#37d6ad;
+}
+
+#cwv21-root .cwv21-workbench-btn {
+  position:absolute;
+  left:5px;right:5px;bottom:7px;
+  width:23px;height:28px;
+  border-radius:9px;
+  font-size:12px;
+  background:rgba(255,255,255,.045);
+}
+
+/* hover 展开的完整对话节点列表 */
+#cwv21-root .cwv21-flyout {
+  position:absolute;
+  top:50%;
+  right:42px;
+  width:330px;
+  max-height:min(70vh,690px);
+  transform:translate(12px,-50%) scale(.985);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  overflow:hidden;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:var(--bg);
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(20px);
+  transition:.16s ease;
+}
+
+#cwv21-root .cwv21-nav-rail:hover .cwv21-flyout {
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  transform:translate(0,-50%) scale(1);
+}
+
+#cwv21-root .cwv21-flyout-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:13px 13px 11px;
+  border-bottom:1px solid var(--line);
+}
+
+#cwv21-root .cwv21-flyout-head b {
+  display:block;
+  font-size:13px;
+}
+
+#cwv21-root .cwv21-flyout-sub {
+  display:block;
+  margin-top:2px;
+  font-size:9px;
+  color:var(--muted);
+}
+
+#cwv21-root .cwv21-open-panel {
+  border:0;
+  border-radius:9px;
+  padding:7px 9px;
+  background:var(--soft);
+  color:rgba(255,255,255,.76);
+  cursor:pointer;
+  font-size:10px;
+}
+
+#cwv21-root .cwv21-open-panel:hover {
+  background:var(--accentSoft);
+  color:white;
+}
+
+#cwv21-root .cwv21-fly-list {
+  max-height:calc(min(70vh,690px) - 59px);
+  overflow:auto;
+  padding:7px;
+}
+
+#cwv21-root .cwv21-fly-list::-webkit-scrollbar,
+#cwv21-root .cwv21-node-list::-webkit-scrollbar { width:5px; }
+#cwv21-root .cwv21-fly-list::-webkit-scrollbar-thumb,
+#cwv21-root .cwv21-node-list::-webkit-scrollbar-thumb {
+  background:rgba(255,255,255,.14);
+  border-radius:999px;
+}
+
+#cwv21-root .cwv21-fly-row {
+  width:100%;
+  border:0;
+  border-radius:10px;
+  padding:8px 9px;
+  display:grid;
+  grid-template-columns:28px 1fr;
+  gap:8px;
+  background:transparent;
+  color:var(--text);
+  text-align:left;
+  cursor:pointer;
+}
+
+#cwv21-root .cwv21-fly-row:hover { background:rgba(255,255,255,.075); }
+
+#cwv21-root .cwv21-fly-num {
+  color:var(--dim);
+  font-size:9px;
+  font-variant-numeric:tabular-nums;
+  padding-top:2px;
+}
+
+#cwv21-root .cwv21-fly-text {
+  min-width:0;
+  color:rgba(255,255,255,.70);
+  font-size:10px;
+  line-height:1.42;
+}
+
+#cwv21-root .cwv21-fly-text em {
+  display:inline-block;
+  margin-right:5px;
+  padding:1px 5px;
+  border-radius:999px;
+  background:var(--accentSoft);
+  color:#6ee7c7;
+  font-style:normal;
+  font-size:8px;
+}
+
+/* ===== 工作台 ===== */
+#cwv21-root .cwv21-panel {
+  position:absolute;
+  top:50%;
+  right:44px;
+  width:min(400px,calc(100vw - 72px));
+  max-height:min(800px,calc(100vh - 30px));
+  transform:translate(18px,-50%) scale(.985);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  overflow:hidden;
+  border:1px solid var(--line);
+  border-radius:22px;
+  background:
+    radial-gradient(circle at top right,rgba(16,163,127,.12),transparent 35%),
+    var(--panel);
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(22px);
+  transition:.18s ease;
+}
+
+#cwv21-root.panel-open .cwv21-panel {
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  transform:translate(0,-50%) scale(1);
+}
+
+#cwv21-root.panel-open .cwv21-flyout {
+  opacity:0 !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+}
+
+#cwv21-root .cwv21-header {
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  padding:18px 18px 14px;
+  border-bottom:1px solid var(--line);
+}
+
+#cwv21-root .cwv21-kicker {
+  font-size:9px;
+  letter-spacing:1.7px;
+  color:var(--muted);
+  margin-bottom:4px;
+}
+
+#cwv21-root .cwv21-title {
+  font-size:18px;
+  font-weight:750;
+}
+
+#cwv21-root .cwv21-close {
+  width:32px;height:32px;
+  border:0;border-radius:10px;
+  background:transparent;
+  color:var(--muted);
+  cursor:pointer;
+  font-size:23px;
+}
+#cwv21-root .cwv21-close:hover { color:white;background:var(--soft2); }
+
+#cwv21-root .cwv21-section {
+  padding:15px 16px;
+  border-bottom:1px solid var(--line);
+}
+#cwv21-root .cwv21-section:last-child { border-bottom:0; }
+
+#cwv21-root .cwv21-section-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:11px;
+  font-size:12px;
+  font-weight:700;
+}
+
+#cwv21-root .cwv21-auto {
+  border:0;
+  border-radius:8px;
+  padding:5px 7px;
+  background:transparent;
+  color:var(--muted);
+  cursor:pointer;
+  font-size:10px;
+}
+#cwv21-root .cwv21-auto:hover { background:var(--soft);color:white; }
+
+#cwv21-root .cwv21-stages {
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:4px;
+}
+
+#cwv21-root .cwv21-stage {
+  border:0;
+  padding:0;
+  background:transparent;
+  color:var(--dim);
+  cursor:pointer;
+}
+
+#cwv21-root .cwv21-stage > span {
+  width:28px;height:28px;
+  margin:0 auto 6px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  display:grid;
+  place-items:center;
+  background:rgba(255,255,255,.03);
+  font-size:10px;
+  font-weight:700;
+  transition:.15s ease;
+}
+
+#cwv21-root .cwv21-stage small {
+  display:block;
+  font-size:9px;
+  white-space:nowrap;
+}
+
+#cwv21-root .cwv21-stage:hover > span {
+  transform:translateY(-2px);
+  border-color:rgba(255,255,255,.28);
+}
+
+#cwv21-root .cwv21-stage.is-done { color:rgba(255,255,255,.75); }
+#cwv21-root .cwv21-stage.is-done > span {
+  background:var(--accentSoft);
+  border-color:rgba(16,163,127,.44);
+  color:#6ee7c7;
+}
+#cwv21-root .cwv21-stage.is-current > span {
+  background:var(--accent);
+  color:white;
+  border-color:var(--accent);
+  box-shadow:0 0 0 4px rgba(16,163,127,.13);
+}
+
+#cwv21-root .cwv21-progress {
+  margin-top:11px;
+  height:3px;
+  border-radius:999px;
+  background:rgba(255,255,255,.08);
+  overflow:hidden;
+}
+#cwv21-root .cwv21-progress i {
+  display:block;
+  width:0;height:100%;
+  background:var(--accent);
+  border-radius:999px;
+  transition:width .2s ease;
+}
+#cwv21-root .cwv21-stage-note {
+  margin-top:8px;
+  color:var(--muted);
+  font-size:10px;
+}
+
+#cwv21-root .cwv21-nav-section { padding-bottom:12px; }
+
+#cwv21-root .cwv21-mode {
+  display:flex;
+  padding:2px;
+  background:rgba(255,255,255,.045);
+  border-radius:9px;
+}
+
+#cwv21-root .cwv21-mode button {
+  border:0;
+  border-radius:7px;
+  padding:4px 8px;
+  background:transparent;
+  color:var(--muted);
+  cursor:pointer;
+  font-size:9px;
+}
+#cwv21-root .cwv21-mode button.is-active {
+  background:rgba(255,255,255,.10);
+  color:white;
+}
+
+#cwv21-root .cwv21-node-meta {
+  color:var(--muted);
+  font-size:9px;
+  margin:-3px 0 8px;
+}
+
+#cwv21-root .cwv21-node-list {
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  max-height:325px;
+  overflow:auto;
+  padding-right:3px;
+}
+
+#cwv21-root .cwv21-node {
+  width:100%;
+  display:grid;
+  grid-template-columns:26px 1fr 18px;
+  gap:8px;
+  align-items:center;
+  border:1px solid transparent;
+  border-radius:12px;
+  padding:9px 8px;
+  background:rgba(255,255,255,.035);
+  color:var(--text);
+  text-align:left;
+  cursor:pointer;
+}
+#cwv21-root .cwv21-node:hover {
+  background:rgba(255,255,255,.075);
+  border-color:rgba(255,255,255,.08);
+  transform:translateX(-1px);
+}
+
+#cwv21-root .cwv21-node-num {
+  color:var(--dim);
+  font-size:9px;
+  font-variant-numeric:tabular-nums;
+}
+#cwv21-root .cwv21-node-main { min-width:0; }
+#cwv21-root .cwv21-node-top {
+  display:flex;
+  gap:6px;
+  align-items:center;
+  margin-bottom:3px;
+}
+#cwv21-root .cwv21-node-top b {
+  font-size:10px;
+  color:rgba(255,255,255,.86);
+}
+#cwv21-root .cwv21-node-top em {
+  padding:1px 5px;
+  border-radius:999px;
+  background:var(--accentSoft);
+  color:#6ee7c7;
+  font-size:8px;
+  font-style:normal;
+}
+#cwv21-root .cwv21-node-snippet {
+  display:block;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  color:var(--muted);
+  font-size:10px;
+}
+#cwv21-root .cwv21-node-arrow { color:var(--dim);font-size:12px; }
+
+#cwv21-root .cwv21-tip {
+  color:var(--muted);
+  font-size:9px;
+  font-weight:400;
+}
+
+#cwv21-root .cwv21-prompt-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+}
+
+#cwv21-root .cwv21-prompt-grid button {
+  min-height:38px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:11px;
+  padding:8px 6px;
+  background:rgba(255,255,255,.04);
+  color:rgba(255,255,255,.80);
+  cursor:pointer;
+  font-size:10px;
+}
+#cwv21-root .cwv21-prompt-grid button:hover {
+  border-color:rgba(16,163,127,.34);
+  background:var(--accentSoft);
+  color:white;
+}
+
+#cwv21-root .cwv21-empty {
+  padding:14px 10px;
+  border-radius:11px;
+  background:rgba(255,255,255,.03);
+  color:var(--muted);
+  text-align:center;
+  font-size:10px;
+}
+
+.cwv21-flash {
+  animation:cwv21Flash 1.5s ease !important;
+}
+@keyframes cwv21Flash {
+  0% { outline:0 solid rgba(16,163,127,0);outline-offset:6px; }
+  25% { outline:4px solid rgba(16,163,127,.34);outline-offset:7px; }
+  100% { outline:0 solid rgba(16,163,127,0);outline-offset:12px; }
+}
+
+.cwv21-toast {
+  position:fixed;
+  left:50%;bottom:88px;
+  z-index:2147483647;
+  transform:translate(-50%,9px);
+  opacity:0;
+  pointer-events:none;
+  padding:9px 14px;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:999px;
+  background:rgba(24,24,27,.97);
+  color:white;
+  box-shadow:0 10px 30px rgba(0,0,0,.28);
+  font:12px/1.2 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  transition:.16s ease;
+}
+.cwv21-toast.show { opacity:1;transform:translate(-50%,0); }
+
+@media (max-width:760px) {
+  #cwv21-root { right:4px; }
+  #cwv21-root .cwv21-flyout { width:min(310px,calc(100vw - 50px)); }
+  #cwv21-root .cwv21-panel { width:calc(100vw - 54px);right:41px; }
+}
+
+
+/* ===== V2.2 快捷提示词编辑 ===== */
+#cwv21-root .cwv21-prompt-head-actions {
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+#cwv21-root .cwv21-prompt-manage {
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:8px;
+  padding:4px 7px;
+  background:rgba(255,255,255,.04);
+  color:rgba(255,255,255,.67);
+  cursor:pointer;
+  font-size:9px;
+}
+
+#cwv21-root .cwv21-prompt-manage:hover {
+  border-color:rgba(16,163,127,.35);
+  background:var(--accentSoft);
+  color:white;
+}
+
+#cwv21-root .cwv21-prompt-empty {
+  grid-column:1 / -1;
+}
+
+#cwv21-root .cwv21-editor-backdrop {
+  position:fixed;
+  inset:0;
+  z-index:2147483550;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  background:rgba(0,0,0,.48);
+  backdrop-filter:blur(5px);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:.16s ease;
+}
+
+#cwv21-root.prompt-editor-open .cwv21-editor-backdrop {
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+
+#cwv21-root .cwv21-editor {
+  width:min(660px,calc(100vw - 40px));
+  max-height:min(820px,calc(100vh - 40px));
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:22px;
+  background:rgba(31,31,34,.985);
+  box-shadow:0 28px 90px rgba(0,0,0,.46);
+  color:var(--text);
+  transform:translateY(10px) scale(.985);
+  transition:.18s ease;
+}
+
+#cwv21-root.prompt-editor-open .cwv21-editor {
+  transform:translateY(0) scale(1);
+}
+
+#cwv21-root .cwv21-editor-header {
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+  padding:18px 20px 14px;
+  border-bottom:1px solid var(--line);
+}
+
+#cwv21-root .cwv21-editor-title {
+  font-size:18px;
+  font-weight:750;
+}
+
+#cwv21-root .cwv21-editor-close {
+  width:32px;
+  height:32px;
+  border:0;
+  border-radius:10px;
+  background:transparent;
+  color:var(--muted);
+  cursor:pointer;
+  font-size:23px;
+}
+
+#cwv21-root .cwv21-editor-close:hover {
+  background:var(--soft2);
+  color:white;
+}
+
+#cwv21-root .cwv21-editor-note {
+  padding:10px 20px;
+  border-bottom:1px solid var(--line);
+  background:rgba(16,163,127,.07);
+  color:rgba(255,255,255,.62);
+  font-size:10px;
+  line-height:1.5;
+}
+
+#cwv21-root .cwv21-editor-list {
+  flex:1;
+  overflow:auto;
+  padding:14px 16px;
+}
+
+#cwv21-root .cwv21-editor-list::-webkit-scrollbar {
+  width:6px;
+}
+#cwv21-root .cwv21-editor-list::-webkit-scrollbar-thumb {
+  background:rgba(255,255,255,.15);
+  border-radius:999px;
+}
+
+#cwv21-root .cwv21-editor-row {
+  padding:13px;
+  margin-bottom:11px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;
+  background:rgba(255,255,255,.035);
+}
+
+#cwv21-root .cwv21-editor-row:last-child {
+  margin-bottom:0;
+}
+
+#cwv21-root .cwv21-editor-row-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:10px;
+  color:rgba(255,255,255,.78);
+  font-size:11px;
+  font-weight:700;
+}
+
+#cwv21-root .cwv21-editor-delete {
+  border:0;
+  border-radius:7px;
+  padding:4px 7px;
+  background:transparent;
+  color:rgba(255,255,255,.38);
+  cursor:pointer;
+  font-size:9px;
+}
+
+#cwv21-root .cwv21-editor-delete:hover {
+  background:rgba(255,90,90,.12);
+  color:#ff8a8a;
+}
+
+#cwv21-root .cwv21-editor-row label {
+  display:block;
+  margin-top:9px;
+}
+
+#cwv21-root .cwv21-editor-row label > span {
+  display:block;
+  margin-bottom:5px;
+  color:var(--muted);
+  font-size:9px;
+}
+
+#cwv21-root .cwv21-editor-row input,
+#cwv21-root .cwv21-editor-row textarea {
+  width:100%;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:10px;
+  outline:none;
+  background:rgba(0,0,0,.18);
+  color:rgba(255,255,255,.92);
+  font:11px/1.55 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+}
+
+#cwv21-root .cwv21-editor-row input {
+  height:36px;
+  padding:0 10px;
+}
+
+#cwv21-root .cwv21-editor-row textarea {
+  min-height:118px;
+  resize:vertical;
+  padding:9px 10px;
+}
+
+#cwv21-root .cwv21-editor-row input:focus,
+#cwv21-root .cwv21-editor-row textarea:focus {
+  border-color:rgba(16,163,127,.56);
+  box-shadow:0 0 0 3px rgba(16,163,127,.10);
+}
+
+#cwv21-root .cwv21-editor-footer {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:13px 16px;
+  border-top:1px solid var(--line);
+  background:rgba(0,0,0,.12);
+}
+
+#cwv21-root .cwv21-editor-footer-right {
+  display:flex;
+  gap:8px;
+}
+
+#cwv21-root .cwv21-editor-footer button {
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:10px;
+  min-height:35px;
+  padding:7px 11px;
+  background:rgba(255,255,255,.045);
+  color:rgba(255,255,255,.74);
+  cursor:pointer;
+  font-size:10px;
+}
+
+#cwv21-root .cwv21-editor-footer button:hover {
+  background:rgba(255,255,255,.08);
+  color:white;
+}
+
+#cwv21-root .cwv21-editor-save {
+  border-color:rgba(16,163,127,.40) !important;
+  background:rgba(16,163,127,.18) !important;
+  color:#8ef0d3 !important;
+}
+
+#cwv21-root .cwv21-editor-save:hover {
+  background:rgba(16,163,127,.28) !important;
+  color:white !important;
+}
+
+@media (max-width:760px) {
+  #cwv21-root .cwv21-editor-backdrop {
+    padding:10px;
+  }
+  #cwv21-root .cwv21-editor {
+    width:calc(100vw - 20px);
+    max-height:calc(100vh - 20px);
+  }
+  #cwv21-root .cwv21-editor-footer {
+    align-items:stretch;
+    flex-direction:column;
+  }
+  #cwv21-root .cwv21-editor-footer-right {
+    width:100%;
+  }
+  #cwv21-root .cwv21-editor-footer-right button {
+    flex:1;
+  }
+}
+
+
+/* =========================================================
+   V2.2.1 FIX — 独立挂载到 body 的快捷提示词编辑器
+   ========================================================= */
+
+.cwv21-editor-backdrop {
+  --editor-bg: rgba(31,31,34,.992);
+  --editor-line: rgba(255,255,255,.11);
+  --editor-text: rgba(255,255,255,.94);
+  --editor-muted: rgba(255,255,255,.55);
+  --editor-accent: #10a37f;
+  --editor-accent-soft: rgba(16,163,127,.18);
+
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483646 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: 100vw !important;
+  height: 100vh !important;
+  padding: 24px !important;
+
+  background: rgba(0,0,0,.52) !important;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition: opacity .16s ease, visibility .16s ease;
+
+  font-family: ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",
+    "PingFang SC","Microsoft YaHei",sans-serif;
+  color: var(--editor-text);
+  box-sizing: border-box;
+}
+
+.cwv21-editor-backdrop *,
+.cwv21-editor-backdrop *::before,
+.cwv21-editor-backdrop *::after {
+  box-sizing: border-box;
+}
+
+.cwv21-editor-backdrop.is-open {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+.cwv21-editor-backdrop .cwv21-editor {
+  width: min(680px, calc(100vw - 40px)) !important;
+  max-height: min(840px, calc(100vh - 40px)) !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+
+  border: 1px solid rgba(255,255,255,.13) !important;
+  border-radius: 22px !important;
+
+  background:
+    radial-gradient(circle at top right, rgba(16,163,127,.10), transparent 34%),
+    var(--editor-bg) !important;
+
+  box-shadow: 0 30px 100px rgba(0,0,0,.52) !important;
+  color: var(--editor-text) !important;
+
+  transform: translateY(10px) scale(.985);
+  transition: transform .18s ease;
+}
+
+.cwv21-editor-backdrop.is-open .cwv21-editor {
+  transform: translateY(0) scale(1) !important;
+}
+
+.cwv21-editor-backdrop .cwv21-editor-header {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 14px !important;
+  padding: 18px 20px 14px !important;
+  border-bottom: 1px solid var(--editor-line) !important;
+}
+
+.cwv21-editor-backdrop .cwv21-kicker {
+  margin-bottom: 4px !important;
+  color: var(--editor-muted) !important;
+  font-size: 9px !important;
+  letter-spacing: 1.7px !important;
+}
+
+.cwv21-editor-backdrop .cwv21-editor-title {
+  color: var(--editor-text) !important;
+  font-size: 18px !important;
+  font-weight: 750 !important;
+}
+
+.cwv21-editor-backdrop .cwv21-editor-close {
+  width: 32px !important;
+  height: 32px !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  background: transparent !important;
+  color: var(--editor-muted) !important;
+  cursor: pointer !important;
+  font-size: 23px !important;
+}
+
+.cwv21-editor-backdrop .cwv21-editor-close:hover {
+  background: rgba(255,255,255,.08) !important;
+  color: white !important;
+}
+
+.cwv21-editor-backdrop .cwv21-editor-note {
+  padding: 10px 20px !important;
+  border-bottom: 1px solid var(--editor-line) !important;
+  background: rgba(16,163,127,.07) !important;
+  color: rgba(255,255,255,.62) !important;
+  font-size: 10px !important;
+  line-height: 1.5 !important;
+}
+
+.cwv21-editor-backdrop .cwv21-editor-list {
+  flex: 1 !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  padding: 14px 16px !important;
+}
+
+.cwv21-editor-backdrop .cwv21-editor-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.cwv21-editor-backdrop .cwv21-editor-list::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(255,255,255,.15);
+}
+
+.cwv21-editor-backdrop .cwv21-editor-row {
+  margin-bottom: 11px !important;
+  padding: 13px !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  border-radius: 14px !important;
+  background: rgba(255,255,255,.035) !important;
+}
+
+.cwv21-editor-backdrop .cwv21-editor-row:last-child {
+  margin-bottom: 0 !important;
+}
+
+.cwv21-editor-backdrop .cwv21-editor-row-head {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-bottom: 10px !important;
+  color: rgba(255,255,255,.78) !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+}
+
+.cwv21-editor-backdrop .cwv21-editor-delete {
+  border: 0 !important;
+  border-radius: 7px !important;
+  padding: 4px 7px !important;
+  background: transparent !important;
+  color: rgba(255,255,255,.40) !important;
+  cursor: pointer !important;
+  font-size: 9px !important;
+}
+
+.cwv21-editor-backdrop .cwv21-editor-delete:hover {
+  background: rgba(255,90,90,.12) !important;
+  color: #ff8a8a !important;
+}
+
+.cwv21-editor-backdrop .cwv21-editor-row label {
+  display: block !important;
+  margin-top: 9px !important;
+}
+
+.cwv21-editor-backdrop .cwv21-editor-row label > span {
+  display: block !important;
+  margin-bottom: 5px !important;
+  color: var(--editor-muted) !important;
+  font-size: 9px !important;
+}
+
+.cwv21-editor-backdrop .cwv21-editor-row input,
+.cwv21-editor-backdrop .cwv21-editor-row textarea {
+  width: 100% !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  border-radius: 10px !important;
+  outline: none !important;
+  background: rgba(0,0,0,.20) !important;
+  color: rgba(255,255,255,.93) !important;
+
+  font: 11px/1.55 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",
+    "PingFang SC","Microsoft YaHei",sans-serif !important;
+}
+
+.cwv21-editor-backdrop .cwv21-editor-row input {
+  height: 36px !important;
+  padding: 0 10px !important;
+}
+
+.cwv21-editor-backdrop .cwv21-editor-row textarea {
+  min-height: 118px !important;
+  resize: vertical !important;
+  padding: 9px 10px !important;
+}
+
+.cwv21-editor-backdrop .cwv21-editor-row input:focus,
+.cwv21-editor-backdrop .cwv21-editor-row textarea:focus {
+  border-color: rgba(16,163,127,.58) !important;
+  box-shadow: 0 0 0 3px rgba(16,163,127,.11) !important;
+}
+
+.cwv21-editor-backdrop .cwv21-editor-footer {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  padding: 13px 16px !important;
+  border-top: 1px solid var(--editor-line) !important;
+  background: rgba(0,0,0,.12) !important;
+}
+
+.cwv21-editor-backdrop .cwv21-editor-footer-right {
+  display: flex !important;
+  gap: 8px !important;
+}
+
+.cwv21-editor-backdrop .cwv21-editor-footer button {
+  min-height: 35px !important;
+  border: 1px solid rgba(255,255,255,.09) !important;
+  border-radius: 10px !important;
+  padding: 7px 11px !important;
+  background: rgba(255,255,255,.045) !important;
+  color: rgba(255,255,255,.76) !important;
+  cursor: pointer !important;
+  font-size: 10px !important;
+}
+
+.cwv21-editor-backdrop .cwv21-editor-footer button:hover {
+  background: rgba(255,255,255,.09) !important;
+  color: white !important;
+}
+
+.cwv21-editor-backdrop .cwv21-editor-save {
+  border-color: rgba(16,163,127,.42) !important;
+  background: rgba(16,163,127,.20) !important;
+  color: #8ef0d3 !important;
+}
+
+.cwv21-editor-backdrop .cwv21-editor-save:hover {
+  background: rgba(16,163,127,.30) !important;
+  color: white !important;
+}
+
+@media (max-width:760px) {
+  .cwv21-editor-backdrop {
+    padding: 10px !important;
+  }
+
+  .cwv21-editor-backdrop .cwv21-editor {
+    width: calc(100vw - 20px) !important;
+    max-height: calc(100vh - 20px) !important;
+  }
+
+  .cwv21-editor-backdrop .cwv21-editor-footer {
+    align-items: stretch !important;
+    flex-direction: column !important;
+  }
+
+  .cwv21-editor-backdrop .cwv21-editor-footer-right {
+    width: 100% !important;
+  }
+
+  .cwv21-editor-backdrop .cwv21-editor-footer-right button {
+    flex: 1 !important;
+  }
+}
+
+
+/* =========================================================
+   V2.3 — 长对话完整历史导航
+   ========================================================= */
+
+#cwv21-root .cwv23-fly-actions,
+#cwv21-root .cwv23-node-head-actions {
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+
+#cwv21-root .cwv23-load-all,
+#cwv21-root .cwv23-load-all-panel {
+  border:1px solid rgba(16,163,127,.28);
+  border-radius:9px;
+  padding:6px 8px;
+  background:rgba(16,163,127,.10);
+  color:#80e7cb;
+  cursor:pointer;
+  font-size:9px;
+  white-space:nowrap;
+}
+
+#cwv21-root .cwv23-load-all:hover,
+#cwv21-root .cwv23-load-all-panel:hover {
+  background:rgba(16,163,127,.20);
+  border-color:rgba(16,163,127,.45);
+  color:white;
+}
+
+#cwv21-root .cwv23-load-all:disabled,
+#cwv21-root .cwv23-load-all-panel:disabled {
+  opacity:.60;
+  cursor:default;
+}
+
+#cwv21-root .cwv21-fly-list {
+  scroll-behavior:smooth;
+  overscroll-behavior:contain;
+}
+
+#cwv21-root .cwv21-node-list {
+  scroll-behavior:smooth;
+  overscroll-behavior:contain;
+}
+
+/* 节点很多时，面板维持固定高度，列表内部滚动 */
+#cwv21-root .cwv21-nav-section {
+  min-height:0;
+}
+
+#cwv21-root .cwv21-node-list {
+  max-height:min(42vh,390px);
+}
+
+@media (max-height:760px) {
+  #cwv21-root .cwv21-node-list {
+    max-height:280px;
+  }
+}
+
+
+/* =========================================================
+   V2.3.1 — 导航 hover 防消失 + 面板滚动增强
+   ========================================================= */
+
+/* 消除右侧细条与导航面板之间的物理空隙：轻微重叠 4px */
+#cwv21-root .cwv21-flyout {
+  right: 30px !important;
+}
+
+/* 不再只依赖 :hover；JS flyout-open 类负责跨越边界时保持展开 */
+#cwv21-root.flyout-open .cwv21-flyout,
+#cwv21-root .cwv21-nav-rail:hover .cwv21-flyout,
+#cwv21-root .cwv21-flyout:hover {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: translate(0,-50%) scale(1) !important;
+}
+
+/* 给右侧增加隐形 hover 桥，进一步防止快速移动时丢失 */
+#cwv21-root .cwv21-flyout::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -16px;
+  width: 18px;
+  height: 100%;
+  background: transparent;
+}
+
+/* 长对话时明确允许列表内部滚动 */
+#cwv21-root .cwv21-fly-list {
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+#cwv21-root .cwv21-node-list {
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  max-height: min(48vh, 430px) !important;
+}
+
+
+/* =========================================================
+   V2.3.2 — 移除“本轮工作流”后的紧凑布局
+   ========================================================= */
+
+#cwv21-root .cwv21-panel {
+  max-height: min(760px, calc(100vh - 30px));
+}
+
+#cwv21-root .cwv21-header {
+  padding-bottom: 15px;
+}
+
+#cwv21-root .cwv21-nav-section {
+  padding-top: 16px;
+}
+
+/* 没有工作流区后，让对话节点列表获得更多垂直空间 */
+#cwv21-root .cwv21-node-list {
+  max-height: min(56vh, 500px) !important;
+}
+
+@media (max-height: 760px) {
+  #cwv21-root .cwv21-node-list {
+    max-height: 360px !important;
+  }
+}
+
+
+/* =========================================================
+   V2.3.3 — 工作台鼠标移开自动收起
+   ========================================================= */
+
+/*
+  给工作台右侧留一个很窄的透明“缓冲区”。
+  鼠标从工作台移动到右侧控制条时不容易因为 1~2px 空隙触发误关闭。
+*/
+#cwv21-root .cwv21-panel::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -18px;
+  width: 20px;
+  height: 100%;
+  background: transparent;
+  pointer-events: auto;
+}
+
+/* 自动收起时维持原有淡出动画 */
+#cwv21-root .cwv21-panel {
+  transition:
+    opacity .18s ease,
+    transform .18s ease,
+    visibility .18s ease;
+}
+
+
+/* =========================================================
+   V2.3.4 — 右侧导航视觉优化
+   目标：
+   1. 左移，避开 ChatGPT / 浏览器原生滚动条
+   2. 半透明、低突兀
+   3. 节点横条更细、更短、更克制
+   ========================================================= */
+
+/* 整个插件导航区域向左让出原生滚动条空间 */
+#cwv21-root {
+  right: 32px !important;
+}
+
+/* 右侧纵向导航条：半透明磨砂，而不是实心黑柱 */
+#cwv21-root .cwv21-nav-rail {
+  width: 30px !important;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(29, 29, 32, .70),
+      rgba(23, 23, 26, .62)
+    ) !important;
+
+  border: 1px solid rgba(255,255,255,.075) !important;
+
+  box-shadow:
+    0 8px 28px rgba(0,0,0,.16),
+    inset 0 1px 0 rgba(255,255,255,.025) !important;
+
+  backdrop-filter: blur(14px) saturate(115%) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(115%) !important;
+}
+
+/* 顶部返回按钮更轻 */
+#cwv21-root .cwv21-top-btn {
+  color: rgba(255,255,255,.56) !important;
+}
+
+#cwv21-root .cwv21-top-btn:hover {
+  color: rgba(255,255,255,.92) !important;
+  background: rgba(255,255,255,.06) !important;
+}
+
+/* 消息数量降低存在感 */
+#cwv21-root .cwv21-rail-count {
+  color: rgba(255,255,255,.42) !important;
+}
+
+/* 刻度点击区域保留，但视觉横条缩短 */
+#cwv21-root .cwv21-tick {
+  width: 19px !important;
+  height: 10px !important;
+}
+
+#cwv21-root .cwv21-tick span {
+  width: 7px !important;
+  height: 2px !important;
+
+  background: rgba(255,255,255,.24) !important;
+  border-radius: 999px !important;
+
+  box-shadow: none !important;
+  transition:
+    width .14s ease,
+    height .14s ease,
+    background .14s ease,
+    opacity .14s ease !important;
+}
+
+/* 普通节点 hover 时才展开 */
+#cwv21-root .cwv21-tick:hover span {
+  width: 16px !important;
+  height: 3px !important;
+  background: rgba(255,255,255,.72) !important;
+}
+
+/* 关键节点仍然保留绿色，但降低饱和和长度 */
+#cwv21-root .cwv21-tick.is-key span {
+  width: 10px !important;
+  height: 2px !important;
+  background: rgba(16,163,127,.62) !important;
+}
+
+/* 关键节点 hover */
+#cwv21-root .cwv21-tick.is-key:hover span {
+  width: 17px !important;
+  height: 3px !important;
+  background: rgba(55,214,173,.88) !important;
+}
+
+/* 底部“工”按钮也半透明、弱化 */
+#cwv21-root .cwv21-workbench-btn {
+  left: 4px !important;
+  right: 4px !important;
+  width: 20px !important;
+
+  background: rgba(255,255,255,.035) !important;
+  border: 1px solid rgba(255,255,255,.045) !important;
+  color: rgba(255,255,255,.58) !important;
+}
+
+#cwv21-root .cwv21-workbench-btn:hover {
+  background: rgba(16,163,127,.14) !important;
+  border-color: rgba(16,163,127,.24) !important;
+  color: rgba(255,255,255,.92) !important;
+}
+
+/*
+  因导航条左移，浮出的对话导航仍保持贴近细条。
+  V2.3.1 的 hover bridge / 防消失逻辑继续生效。
+*/
+#cwv21-root .cwv21-flyout {
+  right: 26px !important;
+}
+
+/* 更窄屏幕时稍微少左移一点 */
+@media (max-width: 900px) {
+  #cwv21-root {
+    right: 24px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  #cwv21-root {
+    right: 18px !important;
+  }
+}
+
+
+/* =========================================================
+   V2.5 — 双数据源状态
+   ========================================================= */
+
+#cwv21-root .cwv21-flyout-sub,
+#cwv21-root .cwv21-node-meta {
+  font-variant-numeric: tabular-nums;
+}
+
+#cwv21-root .cwv21-flyout-sub {
+  max-width: 205px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   V2.5.2 — 工作台 / 对话导航严格互斥
+   ========================================================= */
+
+/*
+  以前 flyout-open / :hover 的强制显示规则可能覆盖 panel-open 的隐藏规则。
+  最终层再次强制声明互斥，且放在 CSS 文件末尾取得最高级联优先权。
+*/
+
+/* 工作台打开：无论鼠标是否仍 hover 导航，导航都必须隐藏 */
+#cwv21-root.panel-open .cwv21-flyout,
+#cwv21-root.panel-open.flyout-open .cwv21-flyout,
+#cwv21-root.panel-open .cwv21-nav-rail:hover .cwv21-flyout {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transform: translate(12px,-50%) scale(.985) !important;
+}
+
+/* 对话导航打开：工作台必须隐藏 */
+#cwv21-root.flyout-open:not(.panel-open) .cwv21-panel {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/*
+  鼠标停留在 flyout 本身时也只允许导航一层出现。
+  避免工作台 auto-close / hover timer 的竞态导致重叠。
+*/
+#cwv21-root .cwv21-flyout:hover ~ .cwv21-panel {
+  pointer-events: none !important;
+}
+
+
+/* =========================================================
+   V2.5.3 — 快捷提示词上移
+   ========================================================= */
+
+/* 快捷提示词固定在对话节点之前，给它稳定高度 */
+#cwv21-root .cwv21-prompt-grid {
+  flex-shrink: 0;
+}
+
+/* 对话节点作为主要可滚动区域，承担剩余高度 */
+#cwv21-root .cwv21-nav-section {
+  min-height: 0;
+  flex: 1 1 auto;
+}
+
+/* 工作台整体改成纵向弹性布局，避免底部内容被挤出视口 */
+#cwv21-root .cwv21-panel {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* 节点列表继续内部滚动 */
+#cwv21-root .cwv21-node-list {
+  max-height: min(52vh, 470px) !important;
+  overflow-y: auto !important;
+}
+
+/* 让快捷提示词板块保持完整可见 */
+#cwv21-root .cwv21-section:has(.cwv21-prompt-grid) {
+  flex: 0 0 auto;
+}
+
+@media (max-height: 760px) {
+  #cwv21-root .cwv21-node-list {
+    max-height: 300px !important;
+  }
+}
